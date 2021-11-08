@@ -10,7 +10,7 @@ Contents
  * [Why?](#why)
  * [Installation](#installation)
  * [Usage](#usage)
- * [Thank you for reading](#Thank-you-for-reading)
+ * [Thank you for reading](#Thank)
 
 ### Why?
 
