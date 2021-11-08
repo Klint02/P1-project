@@ -2,7 +2,7 @@
 
 `ROUTEPLANNER` lets you easily find the best route to collect your trash
 
-![Shallow Backup GIF Demo](img/shallow-backup-demo.gif)
+![Shallow Backup GIF Demo](https://media2.giphy.com/media/QNFhOolVeCzPQ2Mx85/giphy.gif?cid=790b7611e9129f4e085c46b1d291a1be70123910d3e4fbf2&rid=giphy.gif&ct=g)
 
 Contents
 ========
