@@ -16,12 +16,11 @@ Contents
 
 This is a univeristy project for solving inceffecient garbage collection:
 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
++ it is good
++ it is fast
++ it is easy
++ yes
++ profit?
 
 ### Installation
 ---
