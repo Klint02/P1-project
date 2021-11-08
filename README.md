@@ -10,7 +10,7 @@ Contents
  * [Why?](#why)
  * [Installation](#installation)
  * [Usage](#usage)
- * [Thank you for reading](#Thank-you-for-reading-❤️)
+ * [Thank you for reading](#Thanks)
 
 ### Why?
 
@@ -35,6 +35,7 @@ This is a univeristy project for solving inceffecient garbage collection:
 ---
 
 
-### Thank you for reading ❤️
----
+### Thanks 
+
+Many thanks for reading for reading ❤️
 ![wide](https://pbs.twimg.com/media/D5prppPUcAEhUFo.jpg)
