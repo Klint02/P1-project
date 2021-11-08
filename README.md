@@ -37,4 +37,5 @@ This is a univeristy project for solving inceffecient garbage collection:
 
 
 ### Thank you for reading ❤️
+---
 ![wide](https://pbs.twimg.com/media/D5prppPUcAEhUFo.jpg)
