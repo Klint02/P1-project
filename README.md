@@ -1,9 +1,6 @@
 # P1-project
-# shallow-backup
 
-[![Downloads](https://github.com/Klint02/P1-project/releases)
-
-`shallow-backup` lets you easily create lightweight backups of installed packages, applications, fonts and dotfiles, and automatically push them to a remote Git repository.
+`ROUTEPLANNER` lets you easily find the best route to collect your trash
 
 ![Shallow Backup GIF Demo](img/shallow-backup-demo.gif)
 
