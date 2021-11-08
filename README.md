@@ -13,6 +13,7 @@ Contents
  * [Thank you for reading](#Thanks)
 
 ### Why?
+---
 
 This is a univeristy project for solving inceffecient garbage collection:
 
@@ -38,6 +39,7 @@ This is a univeristy project for solving inceffecient garbage collection:
 
 
 ### Thanks 
+---
 
 Many thanks for reading for reading ❤️
 ![wide](https://pbs.twimg.com/media/D5prppPUcAEhUFo.jpg)
