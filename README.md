@@ -34,6 +34,8 @@ This is a univeristy project for solving inceffecient garbage collection:
 ### Usage
 ---
 
+`You run code` then best path outputs
+
 
 ### Thanks 
 
