@@ -8,7 +8,7 @@ int findShortestUnvisited(int visited[NUMBEROFNODE], int shortestDistance[NUMBER
 void findShortestPath(int graph[NUMBEROFNODE][NUMBEROFNODE]);
 void findLenghtsFromNode(int currentNode, int graph[NUMBEROFNODE][NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int trashCompactness[NUMBEROFNODE], int finalRoute[20], int routeNum);
 void printResult(int nodeParent[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int visited[NUMBEROFNODE]);
-int trashRoutePlanner(int visited[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int trashCompactness[NUMBEROFNODE], int finalRoute[20], int currentNode, int routeNum, int searched[]);
+int trashRoutePlanner(int visited[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int trashCompactness[NUMBEROFNODE], int finalRoute[20], int currentNode, int routeNum, int searched[], int nodesOverSeventeen_count);
 
 int main(void)
 {
@@ -56,7 +56,14 @@ void findShortestPath(int graph[NUMBEROFNODE][NUMBEROFNODE])
     trashCompactness[0] = 0;
 
     int currentNode = 0;
-
+    
+    int nodesOverSeventeen_count = 0;
+    
+    for (int i = 0, j = 0; i < NUMBEROFNODE; i++) {
+        if (trashCompactness[i] >= 70) {
+            nodesOverSeventeen_count += 1;
+        }
+    }
     for (int i = 0; i < NUMBEROFNODE; i++)
     {
         currentNode = findShortestUnvisited(visited, shortestDistance, nodeParent, currentNode);
@@ -69,7 +76,7 @@ void findShortestPath(int graph[NUMBEROFNODE][NUMBEROFNODE])
 
     printResult(nodeParent, shortestDistance, visited);
 
-    trashRoutePlanner(visited, shortestDistance, nodeParent, trashCompactness, finalRoute, 0, 0, searched);
+    trashRoutePlanner(visited, shortestDistance, nodeParent, trashCompactness, finalRoute, 0, 0, searched, nodesOverSeventeen_count);
     printf("\n");
     for (int i = 0; i < NUMBEROFNODE; i++)
     {
@@ -91,28 +98,36 @@ void findShortestPath(int graph[NUMBEROFNODE][NUMBEROFNODE])
         2. FALSE: Hvis ingen er over 70 tag naboen med mindst distance
 */
 
-int trashRoutePlanner(int visited[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int trashCompactness[NUMBEROFNODE], int finalRoute[20], int currentNode, int routeNum, int searched[NUMBEROFNODE])
+int trashRoutePlanner(int visited[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int trashCompactness[NUMBEROFNODE], int finalRoute[20], int currentNode, int routeNum, int searched[NUMBEROFNODE], int nodesOverSeventeen_count)
 {
     int compareNode = __INT_MAX__;
     int flag = FALSE;
-
+    int count = 0;
+    
+    
     for (int i = 0; i < NUMBEROFNODE; i++) {
         if (nodeParent[i] == currentNode) {
-            printf("Found: %d\n", i);
-            printf("Found2: %d\n", trashCompactness[i]);
-            searched[routeNum] = i;
-            routeNum++;
-            if (trashCompactness[i] >= 70) {
-                printf("TC: %d\n", i);
-                
-                trashRoutePlanner(visited, shortestDistance, nodeParent, trashCompactness, finalRoute, i, routeNum, searched);
-            } else {
-                
-            }
+            count+=1;
         }
     }
-    for (int i = 0; i < NUMBEROFNODE; i++) {
-        
+    while (NUMBER < nodesOverSeventeen_count) {
+        for (int i = 0, j = 0; i < NUMBEROFNODE; i++) {
+            printf("Current: %d\n", currentNode);
+            if (nodeParent[i] == currentNode) {
+                printf("Found: %d\n", i);
+                printf("Found2: %d\n", trashCompactness[i]);
+                searched[routeNum] = i;
+                routeNum++;
+                j++;
+                if (trashCompactness[i] >= 70) {
+                    printf("TC: %d\n", i);
+                    nodes_count++;
+                    trashRoutePlanner(visited, shortestDistance, nodeParent, trashCompactness, finalRoute, i, routeNum, searched, nodesOverSeventeen_count);
+                } else if (j == count) {
+                    trashRoutePlanner(visited, shortestDistance, nodeParent, trashCompactness, finalRoute, i, routeNum, searched, nodesOverSeventeen_count);
+                }
+            }
+        }
     }
 }
 
