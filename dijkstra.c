@@ -1,53 +1,86 @@
-#include <stdio.h>
-
-#define TRUE 1
-#define FALSE 0
-#define NUMBEROFNODE 10
-
-int findShortestUnvisited(int visited[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int currentNode);
-void findShortestPath(int graph[NUMBEROFNODE][NUMBEROFNODE]);
-void findLenghtsFromNode(int currentNode, int graph[NUMBEROFNODE][NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE]);
-void printResult(int nodeParent[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int visited[NUMBEROFNODE]);
-int trashRoutePlanner(int visited[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int trashCompactness[NUMBEROFNODE], int finalRoute[20], int currentNode, int routeNum);
+#include "matrixShifter.h"
 
 int main(void)
 {
 
-    int graph[NUMBEROFNODE][NUMBEROFNODE] = {
-        /*     0  1  2  3  4  5  6  7  8  9*/
-        /*0*/ {0, 1, 0, 2, 0, 0, 0, 0, 0, 0},
-        /*1*/ {1, 0, 3, 4, 1, 0, 0, 0, 0, 0},
-        /*2*/ {0, 3, 0, 3, 0, 0, 0, 0, 0, 0},
-        /*3*/ {2, 4, 3, 0, 0, 0, 0, 0, 2, 0},
-        /*4*/ {0, 1, 0, 0, 0, 2, 1, 0, 0, 0},
-        /*5*/ {0, 0, 0, 0, 2, 0, 4, 0, 0, 0},
-        /*6*/ {0, 0, 0, 0, 1, 4, 0, 0, 0, 0},
-        /*7*/ {0, 0, 0, 0, 0, 0, 0, 0, 5, 1},
-        /*8*/ {0, 0, 0, 2, 0, 0, 0, 5, 0, 3},
-        /*9*/ {0, 0, 0, 0, 0, 0, 0, 1, 3, 0}};
+    int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 1, 8, 0, 0},
+                                               {1, 0, 3, 5, 9},
+                                               {8, 3, 0, 1, 0},
+                                               {0, 5, 1, 0, 2},
+                                               {0, 9, 0, 2, 0}};
+    int map[NUMBEROFNODES][NUMBEROFNODES] = {0};
 
-    findShortestPath(graph);
+    /*
+                                               {0, 1, 4, 5, 7}
+                                               {1, 0, 3, 4, 6}
+                                               {4, 3, 0, 1, 3}
+                                               {5, 4, 1, 0, 2}
+                                               {7, 6, 3, 2, 0}
+
+                                               
+                                               
+                                               
+                                               */
+
+    int positionArr[NUMBEROFNODES] = {0, 1, 2, 3, 4};
+
+    for (int i = 0; i < NUMBEROFNODES; i++)
+    {
+        findShortestPath(graph, positionArr, map, i);
+        matrixShifter(graph);
+        getNodePlacement(1, positionArr);
+    }
+
+    //printMatrix(map);
+
     return 0;
 }
 
-void findShortestPath(int graph[NUMBEROFNODE][NUMBEROFNODE])
+void getNodePlacement(int numberOfShifts, int positionArr[NUMBEROFNODES])
+{
+    int holder;
+    for (int count = 1; count <= numberOfShifts; count++)
+    {
+        holder = positionArr[0];
+        for (int i = 0; i < NUMBEROFNODES; i++)
+        {
+
+            positionArr[i] = positionArr[i + 1];
+        }
+        positionArr[NUMBEROFNODES - 1] = holder;
+    }
+
+    printf("0 is now node: %d\n", positionArr[0]);
+    printf("1 is now node: %d\n", positionArr[1]);
+    printf("2 is now node: %d\n", positionArr[2]);
+    printf("3 is now node: %d\n", positionArr[3]);
+    printf("4 is now node: %d\n", positionArr[4]);
+}
+
+int getExactNodePos(int positionArr[NUMBEROFNODES], int getPosFor)
+{
+    int value = positionArr[getPosFor];
+    return value;
+}
+
+void findShortestPath(int graph[NUMBEROFNODES][NUMBEROFNODES], int positionArr[NUMBEROFNODES], int map[NUMBEROFNODES][NUMBEROFNODES],int interationCount)
 {
 
     //they are all false since they have not been visited.
-    int visited[NUMBEROFNODE] = {FALSE};
+    int visited[NUMBEROFNODES] = {FALSE};
 
     //unviseted nodes have a distance of infinity since we dont know the distance. start node has a distance of 0 since that's the distance to itself.
-    int shortestDistance[NUMBEROFNODE];
+    int shortestDistance[NUMBEROFNODES];
 
-    for (int i = 0; i < NUMBEROFNODE; i++)
+    for (int i = 0; i < NUMBEROFNODES; i++)
     {
         shortestDistance[i] = __INT_MAX__;
     }
 
     //nodeParent defines the shortes path to a node from previous node. since no parent has been found yet all a -1
-    int nodeParent[NUMBEROFNODE] = {0};
+    int nodeParent[NUMBEROFNODES] = {0};
 
-    int trashCompactness[NUMBEROFNODE] = {0, 69, 0, 75, 70, 71, 0, 100, 71, 0};
+    int trashCompactness[NUMBEROFNODES] = {0};
 
     int finalRoute[20] = {0};
 
@@ -56,7 +89,7 @@ void findShortestPath(int graph[NUMBEROFNODE][NUMBEROFNODE])
 
     int currentNode = 0;
 
-    for (int i = 0; i < NUMBEROFNODE; i++)
+    for (int i = 0; i < NUMBEROFNODES; i++)
     {
         currentNode = findShortestUnvisited(visited, shortestDistance, nodeParent, currentNode);
 
@@ -66,35 +99,22 @@ void findShortestPath(int graph[NUMBEROFNODE][NUMBEROFNODE])
         findLenghtsFromNode(currentNode, graph, shortestDistance, nodeParent);
     }
 
-    printResult(nodeParent, shortestDistance, visited);
+    makeMap(shortestDistance, map, positionArr,interationCount);
 
-    trashRoutePlanner(visited, shortestDistance, nodeParent, trashCompactness, finalRoute, 0, 0);
-    printf("\n");
-    for (int i = 0; i < NUMBEROFNODE; i++)
-    {
-        printf("%d\t", finalRoute[i]);
-    }
-    printf("\n");
+    printResult(nodeParent, shortestDistance, visited, positionArr);
 }
 
-int trashRoutePlanner(int visited[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int trashCompactness[NUMBEROFNODE], int finalRoute[20], int currentNode, int routeNum)
+void makeMap(int shortestDistance[], int map[NUMBEROFNODES][NUMBEROFNODES], int positionArr[NUMBEROFNODES], int iterationCount)
 {
-    int compareNode = __INT_MAX__;
-    int flag = FALSE;
-  
-    
 
-    if (routeNum != NUMBEROFNODE)
-    {
-        trashRoutePlanner(visited, shortestDistance, nodeParent, trashCompactness, finalRoute, currentNode, routeNum + 1);
-        return currentNode;
-    }
+    /*NICKLAS FIX!*/
+    
 }
 
-void findLenghtsFromNode(int currentNode, int graph[NUMBEROFNODE][NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE])
+void findLenghtsFromNode(int currentNode, int graph[NUMBEROFNODES][NUMBEROFNODES], int shortestDistance[NUMBEROFNODES], int nodeParent[NUMBEROFNODES])
 {
     //Updates all adjecent vertices (!= 0), when the new distance is shorter then the old, akkumelated from start node.
-    for (int i = 0; i < NUMBEROFNODE; i++)
+    for (int i = 0; i < NUMBEROFNODES; i++)
     {
         if (graph[currentNode][i] != 0 && shortestDistance[currentNode] + graph[currentNode][i] < shortestDistance[i])
         {
@@ -104,13 +124,13 @@ void findLenghtsFromNode(int currentNode, int graph[NUMBEROFNODE][NUMBEROFNODE],
         }
     }
 }
-//
-int findShortestUnvisited(int visited[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int nodeParent[NUMBEROFNODE], int currentNode)
+
+int findShortestUnvisited(int visited[NUMBEROFNODES], int shortestDistance[NUMBEROFNODES], int nodeParent[NUMBEROFNODES], int currentNode)
 {
     int minimum = __INT_MAX__;
 
     //find the shortestest path that hasent been visited for (numberOfNodes - 1).
-    for (int i = 0; i < NUMBEROFNODE; i++) // from 0 to 4
+    for (int i = 0; i < NUMBEROFNODES; i++) // from 0 to 4
     {
         //pick the node that is not visited and dosent have infinite distance aka we dont know the distance yet.
         if (visited[i] == FALSE && shortestDistance[i] < minimum)
@@ -123,33 +143,36 @@ int findShortestUnvisited(int visited[NUMBEROFNODE], int shortestDistance[NUMBER
     return currentNode;
 }
 
-void printResult(int nodeParent[NUMBEROFNODE], int shortestDistance[NUMBEROFNODE], int visited[NUMBEROFNODE])
+void printResult(int nodeParent[NUMBEROFNODES], int shortestDistance[NUMBEROFNODES], int visited[NUMBEROFNODES], int positionArr[NUMBEROFNODES])
 {
+
     printf("Node \n");
-    for (int i = 0; i < NUMBEROFNODE; i++)
+    for (int i = 0; i < NUMBEROFNODES; i++)
     {
-        printf("%d\t", i);
+        printf("%d\t", positionArr[i]);
     }
     printf("\n\n");
 
     printf("Parent \n");
-    for (int i = 0; i < NUMBEROFNODE; i++)
+    for (int i = 0; i < NUMBEROFNODES; i++)
     {
-        printf("%d\t", nodeParent[i]);
+        printf("%d\t", getExactNodePos(positionArr, nodeParent[i]));
     }
     printf("\n\n");
 
     printf("Shortest Distance \n");
-    for (int i = 0; i < NUMBEROFNODE; i++)
+    for (int i = 0; i < NUMBEROFNODES; i++)
     {
         printf("%d\t", shortestDistance[i]);
     }
     printf("\n\n");
 
+    /*
     printf("visited \n");
-    for (int i = 0; i < NUMBEROFNODE; i++)
+    for (int i = 0; i < NUMBEROFNODES; i++)
     {
         printf("%s\t", visited[i] == 0 ? "FALSE" : "TRUE");
     }
     printf("\n\n");
+    */
 }
