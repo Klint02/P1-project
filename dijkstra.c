@@ -21,9 +21,6 @@ void dijkstra(int map[NUMBEROFNODES][NUMBEROFNODES], int parentsMap[NUMBEROFNODE
     {
         positionArr[i] = i;
     }
-    
-
-    
 
     for (int i = 0; i < NUMBEROFNODES; i++)
     {

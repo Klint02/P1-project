@@ -2,6 +2,10 @@
 
 int main(void)
 {
+    double runtime = 0.0;
+
+    clock_t begin = clock();
+
     int *finalRoute;
     int finalDistance = 0;
     int finalRouteIndex = 0;
@@ -17,6 +21,13 @@ int main(void)
     printf("\nFinal distance: %d\n", finalDistance);
 
     free(finalRoute);
+
+    clock_t end = clock();
+
+    runtime += (double)(end - begin) / CLOCKS_PER_SEC;
+
+    printf("The elapsed time is %f seconds\n", runtime);
+
     return EXIT_SUCCESS;
 }
 
@@ -33,9 +44,9 @@ int *planFinalRoute(int finalRoute[routeLength], int *finalDistance, int *finalR
 
     int targetNode = 7;
 
-    printMatrix(map);
+    //printMatrix(map);
 
-    printMatrix(parentsMap);
+    //printMatrix(parentsMap);
 
     segmentPlanner(currentNode, targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
 
