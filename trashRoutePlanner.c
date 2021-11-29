@@ -40,8 +40,9 @@ int *planFinalRoute(int finalRoute[routeLength], int *finalDistance, int *finalR
     int trashCompactness[NUMBEROFNODES] = {0, 69, 0, 75, 70, 71, 0, 100, 71, 0};
 
     int *routePointer = (int *)calloc(sizeof(int), NUMBEROFNODES * NUMBEROFNODES);
-    dijkstra(map, parentsMap);
 
+    dijkstra(map, parentsMap);
+    //Randomize trashCompactness from 0-70 here
     collectTrash(finalRouteIndex, parentsMap, routePointer, finalDistance, map, trashCompactness);
 
     routePointer = (int *)realloc((void *)routePointer, sizeof(int) * (*finalRouteIndex));
