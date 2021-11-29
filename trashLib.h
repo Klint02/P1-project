@@ -3,7 +3,7 @@
 
 #define TRUE 1
 #define FALSE 0
-#define NUMBEROFNODES 5
+#define NUMBEROFNODES 10
 #define routeLength 20
 
 /*matrixShifter.c*/

@@ -11,4 +11,4 @@ matrixShifter.o: matrixShifter.c trashLib.h
 	gcc -c matrixShifter.c 
 
 clean: 
-	rm *.o *.out
+	rm -rf *.o *.out .vscode 

@@ -2,7 +2,6 @@
 
 int main(void)
 {
-    //int finalRoute[routeLength] = {0};
     int *finalRoute;
     int finalDistance = 0;
     int finalRouteIndex = 0;
@@ -17,6 +16,7 @@ int main(void)
 
     printf("\nFinal distance: %d\n", finalDistance);
 
+    free(finalRoute);
     return EXIT_SUCCESS;
 }
 
@@ -25,16 +25,17 @@ int *planFinalRoute(int finalRoute[routeLength], int *finalDistance, int *finalR
     int map[NUMBEROFNODES][NUMBEROFNODES] = {0};
     int parentsMap[NUMBEROFNODES][NUMBEROFNODES] = {0};
     int trashCompactness[NUMBEROFNODES] = {0, 70, 60, 70, 60};
-    
 
     int *routePointer = (int *)calloc(sizeof(int), NUMBEROFNODES * NUMBEROFNODES);
     dijkstra(map, parentsMap);
 
-    //printMatrix(parentsMap);
+    int currentNode = 6;
 
-    int currentNode = 3;
+    int targetNode = 7;
 
-    int targetNode = 1;
+    printMatrix(map);
+
+    printMatrix(parentsMap);
 
     segmentPlanner(currentNode, targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
 
