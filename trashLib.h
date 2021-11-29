@@ -8,7 +8,6 @@
 #define routeLength 20
 #define CompactnessLimit 70
 
-
 /*matrixShifter.c*/
 void printMatrix(int matrix[NUMBEROFNODES][NUMBEROFNODES]);
 void matrixShifter(int matrix[NUMBEROFNODES][NUMBEROFNODES]);
@@ -28,5 +27,5 @@ void makeMap(int shortestDistance[], int map[NUMBEROFNODES][NUMBEROFNODES], int 
 /*trashRoutePlanner.c*/
 int *planFinalRoute(int finalRoute[routeLength], int *finalDistance, int *finalRouteIndex);
 void segmentPlanner(int *startNode, int *endNode, int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES]);
-int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES],int node);
+int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int node);
 void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES]);

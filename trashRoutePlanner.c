@@ -56,7 +56,7 @@ void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNO
 
     while (targetNode != 0)
     {
-        targetNode = findClosestTrash(map, trashCompactness,currentNode);
+        targetNode = findClosestTrash(map, trashCompactness, currentNode);
         segmentPlanner(&currentNode, &targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
     }
 
@@ -78,7 +78,7 @@ void segmentPlanner(int *startNode, int *endNode, int *finalRouteIndex, int pare
     *startNode = *endNode;
 }
 
-int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES],int node)
+int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int node)
 {
     int trashNode = -1;
     int currentNode = node;
@@ -86,11 +86,11 @@ int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness
 
     for (int i = 0; i < NUMBEROFNODES; i++)
     {
-            if (trashCompactness[i] >= CompactnessLimit && map[currentNode][i] < shortestDistance)
-            {
-                trashNode = i;
-                shortestDistance = map[currentNode][i];
-            }
+        if (trashCompactness[i] >= CompactnessLimit && map[currentNode][i] < shortestDistance)
+        {
+            trashNode = i;
+            shortestDistance = map[currentNode][i];
+        }
     }
 
     if (trashNode != -1)
