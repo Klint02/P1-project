@@ -1,39 +1,21 @@
-#include "matrixShifter.h"
+#include "trashLib.h"
 
-int main(void)
+void dijkstra(int map[NUMBEROFNODES][NUMBEROFNODES], int parentsMap[NUMBEROFNODES][NUMBEROFNODES])
 {
-
     int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 1, 8, 0, 0},
                                                {1, 0, 3, 5, 9},
                                                {8, 3, 0, 1, 0},
                                                {0, 5, 1, 0, 2},
                                                {0, 9, 0, 2, 0}};
-    int map[NUMBEROFNODES][NUMBEROFNODES] = {0};
-
-    /*
-                                               {0, 1, 4, 5, 7}
-                                               {1, 0, 3, 4, 6}
-                                               {4, 3, 0, 1, 3}
-                                               {5, 4, 1, 0, 2}
-                                               {7, 6, 3, 2, 0}
-
-                                               
-                                               
-                                               
-                                               */
 
     int positionArr[NUMBEROFNODES] = {0, 1, 2, 3, 4};
 
     for (int i = 0; i < NUMBEROFNODES; i++)
     {
-        findShortestPath(graph, positionArr, map, i);
+        findShortestPath(graph, positionArr, map, i, parentsMap);
         matrixShifter(graph);
         getNodePlacement(1, positionArr);
     }
-
-    printMatrix(map);
-
-    return 0;
 }
 
 void getNodePlacement(int numberOfShifts, int positionArr[NUMBEROFNODES])
@@ -50,11 +32,11 @@ void getNodePlacement(int numberOfShifts, int positionArr[NUMBEROFNODES])
         positionArr[NUMBEROFNODES - 1] = holder;
     }
 
-    printf("0 is now node: %d\n", positionArr[0]);
-    printf("1 is now node: %d\n", positionArr[1]);
-    printf("2 is now node: %d\n", positionArr[2]);
-    printf("3 is now node: %d\n", positionArr[3]);
-    printf("4 is now node: %d\n", positionArr[4]);
+    //printf("0 is now node: %d\n", positionArr[0]);
+    //printf("1 is now node: %d\n", positionArr[1]);
+    //printf("2 is now node: %d\n", positionArr[2]);
+    //printf("3 is now node: %d\n", positionArr[3]);
+    //printf("4 is now node: %d\n", positionArr[4]);
 }
 
 int getExactNodePos(int positionArr[NUMBEROFNODES], int getPosFor)
@@ -63,7 +45,7 @@ int getExactNodePos(int positionArr[NUMBEROFNODES], int getPosFor)
     return value;
 }
 
-void findShortestPath(int graph[NUMBEROFNODES][NUMBEROFNODES], int positionArr[NUMBEROFNODES], int map[NUMBEROFNODES][NUMBEROFNODES],int interationCount)
+void findShortestPath(int graph[NUMBEROFNODES][NUMBEROFNODES], int positionArr[NUMBEROFNODES], int map[NUMBEROFNODES][NUMBEROFNODES], int interationCount, int parentsMap[NUMBEROFNODES][NUMBEROFNODES])
 {
 
     //they are all false since they have not been visited.
@@ -99,16 +81,17 @@ void findShortestPath(int graph[NUMBEROFNODES][NUMBEROFNODES], int positionArr[N
         findLenghtsFromNode(currentNode, graph, shortestDistance, nodeParent);
     }
 
-    makeMap(shortestDistance, map, positionArr,interationCount);
+    makeMap(shortestDistance, map, positionArr, interationCount, parentsMap, nodeParent);
 
-    printResult(nodeParent, shortestDistance, visited, positionArr);
+    //printResult(nodeParent, shortestDistance, visited, positionArr);
 }
 
-void makeMap(int shortestDistance[], int map[NUMBEROFNODES][NUMBEROFNODES], int positionArr[NUMBEROFNODES], int iterationCount)
+void makeMap(int shortestDistance[], int map[NUMBEROFNODES][NUMBEROFNODES], int positionArr[NUMBEROFNODES], int iterationCount, int parentMap[NUMBEROFNODES][NUMBEROFNODES], int nodeParent[NUMBEROFNODES])
 {
     for (int i = 0; i < NUMBEROFNODES; i++)
     {
-        map[iterationCount][getExactNodePos(positionArr,i)] = shortestDistance[i];
+        map[iterationCount][getExactNodePos(positionArr, i)] = shortestDistance[i];
+        parentMap[iterationCount][getExactNodePos(positionArr, i)] = getExactNodePos(positionArr, nodeParent[i]);
     }
 }
 

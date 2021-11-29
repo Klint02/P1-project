@@ -1,5 +1,4 @@
-#include "matrixShifter.h"
-
+#include "trashLib.h"
 
 void matrixShifter(int matrix[NUMBEROFNODES][NUMBEROFNODES])
 {
@@ -72,11 +71,11 @@ void printMatrix(int matrix[NUMBEROFNODES][NUMBEROFNODES])
     }
 }
 
-void printArray(int array[NUMBEROFNODES]){
+void printArray(int array[NUMBEROFNODES])
+{
     for (int i = 0; i < NUMBEROFNODES; i++)
     {
-        printf("%d ",array[i]);
+        printf("%d ", array[i]);
     }
     printf("\n");
-
 }

@@ -1,10 +1,13 @@
 CFLAGS = -Wall -pedantic -ansi
-TARGET = dijkstra.out
+TARGET = trashRoutePlanner.out
 
-$(TARGET): matrixShifter.o dijkstra.c
-	gcc matrixShifter.o dijkstra.c -o $(TARGET)
+$(TARGET): matrixShifter.o dijkstra.o trashRoutePlanner.c
+	gcc matrixShifter.o dijkstra.o trashRoutePlanner.c -o $(TARGET)
 
-matrixShifter.o: matrixShifter.c matrixShifter.h
+dijkstra.o: dijkstra.c trashLib.h
+	gcc -c dijkstra.c 
+
+matrixShifter.o: matrixShifter.c trashLib.h
 	gcc -c matrixShifter.c 
 
 clean: 
