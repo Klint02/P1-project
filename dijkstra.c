@@ -31,7 +31,7 @@ int main(void)
         getNodePlacement(1, positionArr);
     }
 
-    //printMatrix(map);
+    printMatrix(map);
 
     return 0;
 }
@@ -106,9 +106,10 @@ void findShortestPath(int graph[NUMBEROFNODES][NUMBEROFNODES], int positionArr[N
 
 void makeMap(int shortestDistance[], int map[NUMBEROFNODES][NUMBEROFNODES], int positionArr[NUMBEROFNODES], int iterationCount)
 {
-
-    /*NICKLAS FIX!*/
-    
+    for (int i = 0; i < NUMBEROFNODES; i++)
+    {
+        map[iterationCount][getExactNodePos(positionArr,i)] = shortestDistance[i];
+    }
 }
 
 void findLenghtsFromNode(int currentNode, int graph[NUMBEROFNODES][NUMBEROFNODES], int shortestDistance[NUMBEROFNODES], int nodeParent[NUMBEROFNODES])
