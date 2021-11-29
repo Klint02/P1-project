@@ -12,6 +12,7 @@ int main(void)
     finalRoute = planFinalRoute(finalRoute, &finalDistance, &finalRouteIndex);
 
     printf("ROUTE:");
+    printf("0->");
     for (int i = 0; i < finalRouteIndex; i++)
     {
         printf("%d->", finalRoute[i]);
@@ -35,39 +36,78 @@ int *planFinalRoute(int finalRoute[routeLength], int *finalDistance, int *finalR
 {
     int map[NUMBEROFNODES][NUMBEROFNODES] = {0};
     int parentsMap[NUMBEROFNODES][NUMBEROFNODES] = {0};
-    int trashCompactness[NUMBEROFNODES] = {0, 70, 60, 70, 60};
+
+    int trashCompactness[NUMBEROFNODES] = {0, 69, 0, 75, 70, 71, 0, 100, 71, 0};
 
     int *routePointer = (int *)calloc(sizeof(int), NUMBEROFNODES * NUMBEROFNODES);
     dijkstra(map, parentsMap);
 
-    int currentNode = 6;
-
-    int targetNode = 7;
-
-    //printMatrix(map);
-
-    //printMatrix(parentsMap);
-
-    segmentPlanner(currentNode, targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
+    collectTrash(finalRouteIndex, parentsMap, routePointer, finalDistance, map, trashCompactness);
 
     routePointer = (int *)realloc((void *)routePointer, sizeof(int) * (*finalRouteIndex));
     return routePointer;
 }
 
-void segmentPlanner(int startNode, int endNode, int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES])
+void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES])
 {
 
-    int currentNode = startNode;
-    *(routePointer + *finalRouteIndex) = currentNode;
-    *finalRouteIndex += 1;
-    while (currentNode != endNode)
+    int currentNode = 0;
+    int targetNode = __INT_MAX__;
+
+    while (targetNode != 0)
     {
-        *(routePointer + *finalRouteIndex) = parentsMap[endNode][currentNode];
-        currentNode = parentsMap[endNode][currentNode];
-        *finalRouteIndex += 1;
+        targetNode = findClosestTrash(map, trashCompactness,currentNode);
+        segmentPlanner(&currentNode, &targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
     }
 
-    *finalDistance += map[startNode][endNode];
+    segmentPlanner(&currentNode, &targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
+}
+
+void segmentPlanner(int *startNode, int *endNode, int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES])
+{
+
+    int currentNode = *startNode;
+
+    while (currentNode != *endNode)
+    {
+        *(routePointer + *finalRouteIndex) = parentsMap[*endNode][currentNode];
+        currentNode = parentsMap[*endNode][currentNode];
+        *finalRouteIndex += 1;
+    }
+    *finalDistance += map[*startNode][*endNode];
+    *startNode = *endNode;
+}
+
+int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES],int node)
+{
+    int trashNode = -1;
+    int currentNode = node;
+    int shortestDistance = __INT_MAX__;
+
+    for (int i = 0; i < NUMBEROFNODES; i++)
+    {
+            if (trashCompactness[i] >= CompactnessLimit && map[currentNode][i] < shortestDistance)
+            {
+                trashNode = i;
+                shortestDistance = map[currentNode][i];
+            }
+    }
+
+    if (trashNode != -1)
+    {
+
+        trashCompactness[trashNode] = 0;
+        printf("\n");
+
+        printf("TRASH NODE: %d\n", trashNode);
+
+        printArray(trashCompactness);
+        return trashNode;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 /* Array med hvilke noder der er over 70 (trashCompactness)
