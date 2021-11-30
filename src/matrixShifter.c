@@ -1,5 +1,6 @@
 #include "trashLib.h"
 
+//This function shifts the whole matrix appropriately so the next node is now the starting node.
 void matrixShifter(int matrix[NUMBEROFNODES][NUMBEROFNODES])
 {
     int holderArr[NUMBEROFNODES];
@@ -8,6 +9,7 @@ void matrixShifter(int matrix[NUMBEROFNODES][NUMBEROFNODES])
     shiftMatrixUp(matrix, holderArr);
 }
 
+//Move all collums to the left in the matrix, collums at the start moves to the end.
 void shiftMatrixLeft(int matrix[NUMBEROFNODES][NUMBEROFNODES])
 {
     int holder;
@@ -34,6 +36,7 @@ void shiftMatrixLeft(int matrix[NUMBEROFNODES][NUMBEROFNODES])
     }
 }
 
+//Copies first array in matrix
 void copyArray(int matrix[NUMBEROFNODES][NUMBEROFNODES], int holderArr[NUMBEROFNODES])
 {
     for (int i = 0; i < NUMBEROFNODES; i++)
@@ -42,6 +45,7 @@ void copyArray(int matrix[NUMBEROFNODES][NUMBEROFNODES], int holderArr[NUMBEROFN
     }
 }
 
+//moves all arrays one row up in the matrix and paste copied array to the buttom to avoid it being overwritten
 void shiftMatrixUp(int matrix[NUMBEROFNODES][NUMBEROFNODES], int holderArr[NUMBEROFNODES])
 {
 
@@ -57,25 +61,4 @@ void shiftMatrixUp(int matrix[NUMBEROFNODES][NUMBEROFNODES], int holderArr[NUMBE
     {
         matrix[NUMBEROFNODES - 1][i] = holderArr[i];
     }
-}
-void printMatrix(int matrix[NUMBEROFNODES][NUMBEROFNODES])
-{
-    printf("\n");
-    for (int i = 0; i < NUMBEROFNODES; i++)
-    {
-        for (int j = 0; j < NUMBEROFNODES; j++)
-        {
-            printf("%d  ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-void printArray(int array[NUMBEROFNODES])
-{
-    for (int i = 0; i < NUMBEROFNODES; i++)
-    {
-        printf("%d ", array[i]);
-    }
-    printf("\n");
 }
