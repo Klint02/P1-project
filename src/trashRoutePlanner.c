@@ -1,5 +1,7 @@
 #include "trashLib.h"
 
+/*TODO: Pointer to null error: Hvis ingen node har har 70 eller over compactness. */
+
 int main(void)
 {
     int *finalRoute = NULL;
@@ -30,15 +32,19 @@ int *planFinalRoute(int finalRoute[ROUTELENGTH], int *finalDistance, int *finalR
     int parentsMap[NUMBEROFNODES][NUMBEROFNODES] = {0};
     int trashCompactness[NUMBEROFNODES] = {0};
 
+    int truckFullness = 0;
+
     compactnessRandomizer(trashCompactness);
     printArray(trashCompactness);
 
     /*Allocates the biggest case use of memory for route array*/
     int *routePointer = (int *)calloc(sizeof(int), NUMBEROFNODES * NUMBEROFNODES);
+
     if (routePointer != NULL)
     {
         dijkstra(map, parentsMap);
-        collectTrash(finalRouteIndex, parentsMap, routePointer, finalDistance, map, trashCompactness);
+
+        collectTrash(finalRouteIndex, parentsMap, routePointer, finalDistance, map, trashCompactness, &truckFullness);
     }
 
     /*Reallocates memory to new array size specified by finalRouteIndex*/
@@ -66,7 +72,7 @@ void compactnessRandomizer(int trashCompactness[NUMBEROFNODES])
 }
 
 /*Runs segment planner for all nodes that needs to be visited.*/
-void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES])
+void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int *truckFullnessPtr)
 {
 
     int currentNode = 0;
@@ -75,7 +81,7 @@ void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNO
     /*run until all trash nodes have been visited*/
     while (targetNode != 0)
     {
-        targetNode = findClosestTrash(map, trashCompactness, currentNode);
+        targetNode = findClosestTrash(map, trashCompactness, currentNode, truckFullnessPtr);
         segmentPlanner(&currentNode, &targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
     }
 
@@ -101,11 +107,13 @@ void segmentPlanner(int *startNode, int *endNode, int *finalRouteIndex, int pare
 }
 
 /*Find the closest node with a trash compactness over 69*/
-int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int node)
+int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int node, int *truckFullnessPtr)
 {
     int trashNode = -1;
     int currentNode = node;
     int shortestDistance = __INT_MAX__;
+
+    printf("Truck is now %d procent full\n", *truckFullnessPtr);
 
     for (int i = 0; i < NUMBEROFNODES; i++)
     {
@@ -116,14 +124,14 @@ int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness
         }
     }
 
-    if (trashNode != -1) /*checks if trash node has been found*/
+    if (trashNode != -1 && *truckFullnessPtr < TRUCKLIMIT) /*checks if trash node has been found and if truck is full*/
     {
-
-        trashCompactness[trashNode] = 0;
+        *truckFullnessPtr += 25;         /*Truck gets filled with value 25 when node is emptied*/
+        trashCompactness[trashNode] = 0; /*Node is emptied*/
 
         printf("\n");
 
-        printf("TRASH NODE: %d\n", trashNode);
+        printf("Going to TRASH NODE: %d\n", trashNode);
 
         printArray(trashCompactness);
 

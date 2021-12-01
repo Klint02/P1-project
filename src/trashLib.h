@@ -8,6 +8,7 @@
 #define NUMBEROFNODES 10
 #define ROUTELENGTH 20
 #define COMPACTNESSLIMIT 70
+#define TRUCKLIMIT 100
 
 /*matrixShifter.c*/
 void matrixShifter(int matrix[NUMBEROFNODES][NUMBEROFNODES]);
@@ -33,6 +34,6 @@ void makeMap(int shortestDistance[], int map[NUMBEROFNODES][NUMBEROFNODES], int 
 /*trashRoutePlanner.c*/
 int *planFinalRoute(int finalRoute[ROUTELENGTH], int *finalDistance, int *finalRouteIndex);
 void segmentPlanner(int *startNode, int *endNode, int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES]);
-int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int node);
+int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int node, int *truckFullnessPtr);
 void compactnessRandomizer(int trashCompactness[NUMBEROFNODES]);
-void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES]);
+void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int *truckFullnessPtr);
