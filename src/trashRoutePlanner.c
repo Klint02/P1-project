@@ -12,6 +12,7 @@ int main(void)
 
     if (finalRoute != NULL)
     {
+        printf("\n");
         printRoute(finalRouteIndex, finalRoute, finalDistance);
     }
     else
@@ -132,6 +133,8 @@ int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness
         printf("\n");
 
         printf("Going to TRASH NODE: %d\n", trashNode);
+
+        printf("Current trash compactness: \n");
 
         printArray(trashCompactness);
 

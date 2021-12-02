@@ -4,7 +4,7 @@ void dijkstra(int map[NUMBEROFNODES][NUMBEROFNODES], int parentsMap[NUMBEROFNODE
 {
     /*Data representing nodes and their connection.*/
 
-    /*Matrix: Orginal*/
+    /*Matrix: Orginal | INPUT YOUR DATA HERE*/ 
     int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 1, 0, 2, 0, 0, 0, 0, 0, 0},
                                                {1, 0, 3, 4, 1, 0, 0, 0, 0, 0},
                                                {0, 3, 0, 3, 0, 0, 0, 0, 0, 0},
