@@ -38,3 +38,4 @@ void segmentPlanner(int *startNode, int *endNode, int *finalRouteIndex, int pare
 int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int node, int *truckFullnessPtr);
 void compactnessRandomizer(int trashCompactness[NUMBEROFNODES]);
 void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNODES], int *routePointer, int *finalDistance, int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness[NUMBEROFNODES], int *truckFullnessPtr);
+int checkTrashProgress(int trashCompactness[NUMBEROFNODES]);

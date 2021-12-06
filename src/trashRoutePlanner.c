@@ -28,7 +28,7 @@ int main(void)
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; // calculates execution time.
 
-    printf("Execution time: %lf seconds \n",time_spent);
+    printf("Execution time: %lf seconds \n", time_spent);
 
     return EXIT_SUCCESS;
 }
@@ -38,11 +38,11 @@ int *planFinalRoute(int finalRoute[ROUTELENGTH], int *finalDistance, int *finalR
 {
     int map[NUMBEROFNODES][NUMBEROFNODES] = {0};
     int parentsMap[NUMBEROFNODES][NUMBEROFNODES] = {0};
-    int trashCompactness[NUMBEROFNODES] = {0, 84, 75, 23, 50, 34, 70, 90, 82, 18};
+    int trashCompactness[NUMBEROFNODES] = {0,0,0,80,90,0,0,0,0};
 
     int truckFullness = 0;
 
-    // compactnessRandomizer(trashCompactness);
+    //compactnessRandomizer(trashCompactness);
     printArray(trashCompactness);
 
     /*Allocates the biggest case use of memory for route array*/
@@ -151,6 +151,17 @@ int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness
         {
             trashNode = i;
             shortestDistance = map[currentNode][i];
+        }
+        else if (map[currentNode][i] == shortestDistance) /*If the distance is equal to the last node*/
+        {
+            if (trashCompactness[i] > trashCompactness[trashNode]) /*pick the one with most trash compactness*/
+            {
+                printf("\nThe distance to node %d and node %d is equal\n",trashNode, i);
+                trashNode = i;
+                shortestDistance = map[currentNode][i];
+                printf("Going to largest trash compactness node: %d\n",trashNode);
+                
+            }
         }
     }
 
