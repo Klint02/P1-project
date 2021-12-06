@@ -30,6 +30,7 @@ void findLenghtsFromNode(int currentNode, int graph[NUMBEROFNODES][NUMBEROFNODES
 void getNodePlacement(int numberOfShifts, int placeArr[NUMBEROFNODES]);
 int getExactNodePos(int positionArr[NUMBEROFNODES], int getPosFor);
 void makeMap(int shortestDistance[], int map[NUMBEROFNODES][NUMBEROFNODES], int positionArr[NUMBEROFNODES], int iterationCount, int parentMap[NUMBEROFNODES][NUMBEROFNODES], int nodeParent[NUMBEROFNODES]);
+int readMatrixData(int graph[NUMBEROFNODES][NUMBEROFNODES]);
 
 /*trashRoutePlanner.c*/
 int *planFinalRoute(int finalRoute[ROUTELENGTH], int *finalDistance, int *finalRouteIndex);

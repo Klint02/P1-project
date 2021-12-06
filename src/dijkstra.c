@@ -4,73 +4,10 @@ void dijkstra(int map[NUMBEROFNODES][NUMBEROFNODES], int parentsMap[NUMBEROFNODE
 {
     /*Data representing nodes and their connection.*/
 
-    /*Matrix: Orginal | INPUT YOUR DATA HERE*/ 
-    int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 1, 0, 2, 0, 0, 0, 0, 0, 0},
-                                               {1, 0, 3, 4, 1, 0, 0, 0, 0, 0},
-                                               {0, 3, 0, 3, 0, 0, 0, 0, 0, 0},
-                                               {2, 4, 3, 0, 0, 0, 0, 0, 2, 0},
-                                               {0, 1, 0, 0, 0, 2, 1, 0, 0, 0},
-                                               {0, 0, 0, 0, 2, 0, 4, 0, 0, 0},
-                                               {0, 0, 0, 0, 1, 4, 0, 0, 0, 0},
-                                               {0, 0, 0, 0, 0, 0, 0, 0, 5, 1},
-                                               {0, 0, 0, 2, 0, 0, 0, 5, 0, 3},
-                                               {0, 0, 0, 0, 0, 0, 0, 1, 3, 0}};
-    /*Matrix: 1
-    int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 2, 0, 0, 0, 4, 1, 0, 0, 0},
-                                               {2, 0, 1, 2, 3, 2, 0, 0, 0, 0},
-                                               {0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
-                                               {0, 0, 0, 0, 2, 3, 0, 0, 0, 5},
-                                               {0, 3, 0, 0, 0, 5, 0, 4, 7, 0},
-                                               {4, 2, 0, 3, 0, 0, 6, 0, 0, 0},
-                                               {1, 0, 0, 0, 0, 6, 0, 0, 3, 0},
-                                               {0, 0, 0, 0, 4, 0, 0, 0, 0, 5},
-                                               {0, 0, 0, 0, 7, 0, 3, 0, 0, 9},
-                                               {0, 0, 4, 5, 0, 0, 0, 5, 9, 0}}; */
-    /*Matrix: 2
-    int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 2, 0, 0, 0, 0, 0, 0, 5, 2},
-                                               {2, 0, 0, 1, 0, 0, 0, 2, 5, 3},
-                                               {0, 0, 0, 2, 0, 0, 0, 5, 0, 9},
-                                               {0, 1, 2, 0, 0, 2, 0, 0, 7, 0},
-                                               {0, 0, 0, 0, 0, 5, 7, 0, 9, 0},
-                                               {0, 0, 0, 2, 5, 0, 4, 2, 0, 0},
-                                               {0, 0, 0, 0, 7, 4, 0, 0, 0, 4},
-                                               {0, 2, 5, 0, 0, 2, 0, 0, 7, 0},
-                                               {5, 5, 0, 7, 9, 0, 0, 7, 0, 8},
-                                               {2, 3, 9, 0, 0, 0, 4, 0, 8, 0}}; */
-    /*Matrix: 3
-    int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                               {1, 0, 2, 2, 2, 2, 2, 2, 2, 2},
-                                               {1, 2, 0, 3, 3, 3, 3, 3, 3, 3},
-                                               {1, 2, 3, 0, 4, 4, 4, 4, 4, 4},
-                                               {1, 2, 3, 4, 0, 5, 5, 5, 5, 5},
-                                               {1, 2, 3, 4, 5, 0, 6, 6, 6, 6},
-                                               {1, 2, 3, 4, 5, 6, 0, 7, 7, 7},
-                                               {1, 2, 3, 4, 5, 6, 7, 0, 8, 8},
-                                               {1, 2, 3, 4, 5, 6, 7, 8, 0, 9},
-                                               {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}}; */
-    /*Matrix: 4
-    int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 6, 0, 0, 5, 1, 8, 0, 5, 0},
-                                               {6, 0, 2, 0, 0, 6, 0, 7, 0, 0},
-                                               {0, 2, 0, 3, 0, 0, 0, 4, 0, 0},
-                                               {0, 0, 3, 0, 0, 0, 5, 0, 0, 8},
-                                               {5, 0, 0, 0, 0, 2, 0, 0, 0, 4},
-                                               {1, 6, 0, 0, 2, 0, 4, 3, 0, 0},
-                                               {8, 0, 0, 5, 0, 4, 0, 1, 0, 0},
-                                               {0, 7, 4, 0, 0, 3, 1, 0, 3, 8},
-                                               {5, 0, 0, 0, 0, 0, 0, 3, 0, 5},
-                                               {0, 0, 0, 8, 4, 0, 0, 8, 5, 0}}; */
-    /* Matrix: 5
-    int graph[NUMBEROFNODES][NUMBEROFNODES] = {{0, 5, 0, 2, 5, 0, 0, 0, 0, 0},
-                                               {5, 0, 3, 0, 0, 4, 2, 5, 0, 9},
-                                               {0, 3, 0, 1, 2, 3, 4, 6, 0, 0},
-                                               {2, 0, 1, 0, 0, 0, 0, 5, 2, 0},
-                                               {5, 0, 2, 0, 0, 0, 0, 0, 0, 5},
-                                               {0, 4, 3, 0, 0, 0, 3, 2, 1, 0},
-                                               {0, 2, 4, 0, 0, 3, 0, 0, 2, 0},
-                                               {0, 5, 6, 5, 0, 2, 0, 0, 0, 9},
-                                               {0, 0, 0, 2, 0, 1, 2, 0, 0, 1},
-                                               {0, 9, 0, 0, 5, 0, 0, 9, 1, 0}}; */
+    int graph[NUMBEROFNODES][NUMBEROFNODES]; 
+    readMatrixData(graph);
 
+    
     int positionArr[NUMBEROFNODES] = {0}; /*keeps track of nodes posistions when matrix is shifted.*/
 
     for (int i = 0; i < NUMBEROFNODES; i++) /*asigns nodes their number according to the number of nodes.*/
@@ -84,6 +21,34 @@ void dijkstra(int map[NUMBEROFNODES][NUMBEROFNODES], int parentsMap[NUMBEROFNODE
         findShortestPath(graph, positionArr, map, i, parentsMap); /*finds shortest path to every node from starting node.*/
         matrixShifter(graph);                                     /*shifts matrix by one so the next node is now the starting node.*/
         getNodePlacement(1, positionArr);                         /*shifts posistions array by one to keep track of node placement.*/
+    }
+}
+
+/*Reads matrix data from matrixData.txt file and assigns it to the grap array*/
+int readMatrixData(int graph[NUMBEROFNODES][NUMBEROFNODES])
+{
+
+    FILE *dataFile;
+
+    dataFile = fopen("matrixData.txt", "r");
+
+    if (dataFile != NULL)
+    {
+        fscanf(dataFile,"Matrix: Orginal 10x10 nodes | INPUT YOUR DATA BELOW ");
+        for (int i = 0; i < NUMBEROFNODES; i++)
+        {
+            for (int j = 0; j < NUMBEROFNODES; j++)
+            {
+                fscanf(dataFile,"%d ",&(graph[i][j]));
+            }
+        }
+        fclose(dataFile);
+        return 1;
+    }
+    else
+    {
+        printf("ERROR POINTER TO NULL: 'matrixData.txt' can not be found in current directory\n");
+        return 0;
     }
 }
 

@@ -4,6 +4,8 @@
 
 int main(void)
 {
+    clock_t begin = clock();
+
     int *finalRoute = NULL;
     int finalDistance = 0;
     int finalRouteIndex = 0;
@@ -23,6 +25,11 @@ int main(void)
     free(finalRoute);
     finalRoute = NULL;
 
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; // calculates execution time.
+
+    printf("Execution time: %lf seconds \n",time_spent);
+
     return EXIT_SUCCESS;
 }
 
@@ -31,11 +38,11 @@ int *planFinalRoute(int finalRoute[ROUTELENGTH], int *finalDistance, int *finalR
 {
     int map[NUMBEROFNODES][NUMBEROFNODES] = {0};
     int parentsMap[NUMBEROFNODES][NUMBEROFNODES] = {0};
-    int trashCompactness[NUMBEROFNODES] = {0};
+    int trashCompactness[NUMBEROFNODES] = {0, 84, 75, 23, 50, 34, 70, 90, 82, 18};
 
     int truckFullness = 0;
 
-    compactnessRandomizer(trashCompactness);
+    // compactnessRandomizer(trashCompactness);
     printArray(trashCompactness);
 
     /*Allocates the biggest case use of memory for route array*/
@@ -80,14 +87,36 @@ void collectTrash(int *finalRouteIndex, int parentsMap[NUMBEROFNODES][NUMBEROFNO
     int targetNode = __INT_MAX__;
 
     /*run until all trash nodes have been visited*/
-    while (targetNode != 0)
+    while (checkTrashProgress(trashCompactness))
     {
         targetNode = findClosestTrash(map, trashCompactness, currentNode, truckFullnessPtr);
         segmentPlanner(&currentNode, &targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
+        if (currentNode == 0 && *truckFullnessPtr == 100)
+        {
+            printf("\nReturning home to empty trash\n");
+            *truckFullnessPtr = 0;
+        }
+    }
+    targetNode = findClosestTrash(map, trashCompactness, currentNode, truckFullnessPtr);
+
+    /*All trash nodes is picked up return to 0*/
+    segmentPlanner(&currentNode, &targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
+}
+
+/*Returns number of trash nodes over 70*/
+int checkTrashProgress(int trashCompactness[NUMBEROFNODES])
+{
+    int trashNodesMissing = 0;
+
+    for (int i = 0; i < NUMBEROFNODES; i++)
+    {
+        if (trashCompactness[i] > COMPACTNESSLIMIT)
+        {
+            trashNodesMissing++;
+        }
     }
 
-    /*return to node 0*/
-    segmentPlanner(&currentNode, &targetNode, finalRouteIndex, parentsMap, routePointer, finalDistance, map);
+    return trashNodesMissing;
 }
 
 /*Calculates best route from any node to any other node and stores route data.*/
