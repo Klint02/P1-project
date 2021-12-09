@@ -1,6 +1,6 @@
 #include "trashLib.h"
 
-//Prints all array results for dijkstra calculations
+/*Prints all array results for dijkstra calculations*/
 void printResult(int nodeParent[NUMBEROFNODES], int shortestDistance[NUMBEROFNODES], int visited[NUMBEROFNODES], int positionArr[NUMBEROFNODES])
 {
     printf("Node \n");
@@ -32,7 +32,7 @@ void printResult(int nodeParent[NUMBEROFNODES], int shortestDistance[NUMBEROFNOD
     printf("\n\n");
 }
 
-//Prints the final calculated route.
+/*Prints the final calculated route.*/
 void printRoute(int finalRouteIndex, int *finalRouteArray, int finalDistance)
 {
     printf("ROUTE:");
@@ -59,7 +59,7 @@ void printMatrix(int matrix[NUMBEROFNODES][NUMBEROFNODES])
     }
 }
 
-//prints array with the length of "number of nodes"
+/*prints array with the length of "number of nodes"*/
 void printArray(int array[NUMBEROFNODES])
 {
     for (int i = 0; i < NUMBEROFNODES; i++)
