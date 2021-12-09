@@ -1,6 +1,6 @@
 #include "trashLib.h"
 
-//This function shifts the whole matrix appropriately so the next node is now the starting node.
+/*This function shifts the whole matrix appropriately so the next node is now the starting node.*/
 void matrixShifter(int matrix[NUMBEROFNODES][NUMBEROFNODES])
 {
     int holderArr[NUMBEROFNODES];
@@ -9,15 +9,14 @@ void matrixShifter(int matrix[NUMBEROFNODES][NUMBEROFNODES])
     shiftMatrixUp(matrix, holderArr);
 }
 
-//Move all collums to the left in the matrix, collums at the start moves to the end.
+/*Move all collums to the left in the matrix, collums at the start moves to the end.*/
 void shiftMatrixLeft(int matrix[NUMBEROFNODES][NUMBEROFNODES])
 {
     int holder;
-    int chooser;
 
     for (int lodretI = 0, destination = 0; lodretI < NUMBEROFNODES; lodretI++)
     {
-        holder = matrix[lodretI][destination]; //holds first index in array.
+        holder = matrix[lodretI][destination]; /*holds first index in array.*/
 
         while (destination < NUMBEROFNODES)
         {
@@ -36,7 +35,7 @@ void shiftMatrixLeft(int matrix[NUMBEROFNODES][NUMBEROFNODES])
     }
 }
 
-//Copies first array in matrix
+/*Copies first array in matrix*/
 void copyArray(int matrix[NUMBEROFNODES][NUMBEROFNODES], int holderArr[NUMBEROFNODES])
 {
     for (int i = 0; i < NUMBEROFNODES; i++)
@@ -45,7 +44,7 @@ void copyArray(int matrix[NUMBEROFNODES][NUMBEROFNODES], int holderArr[NUMBEROFN
     }
 }
 
-//moves all arrays one row up in the matrix and paste copied array to the buttom to avoid it being overwritten
+/*moves all arrays one row up in the matrix and paste copied array to the buttom to avoid it being overwritten*/
 void shiftMatrixUp(int matrix[NUMBEROFNODES][NUMBEROFNODES], int holderArr[NUMBEROFNODES])
 {
 
