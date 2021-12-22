@@ -35,12 +35,26 @@ This is a univeristy project for solving inceffecient garbage collection:
     + `Download`
 
 2. Install
-    + `Install`
+    To compile the code on a Windows system , use the following commands in your terminal while in the /src directory.
+
+gcc -c -Wall -pedantic debug.c
+
+gcc -c -Wall -pedantic matrixShifter.c
+
+gcc -c -Wall -pedantic dijkstra.c
+
+gcc matrixShifter.o debug.o dijkstra.o trashRoutePlanner.c -o trashRoutePlanner.exe
+
+To compile the code on a Linux system use the following command while in the /src directory. 
+
+make
+
+After compiling the code, input your adjacency matrix in the "matrixData.txt" located in the /src directory, and then run your executable or simply run the program with the default matrix already present in matrixData.txt. 
 
 ### Usage
 ---
 
-`You run code` then best path outputs
+When running the program the user will be prompted an output in the terminal, which firstly specifies the trash compactness in each node, and then how full the truck currently is. When running this data-set the nodes with their correct order in reference to the shortest path is then specified while reminding the user about the trucks fullness and the trash compactness for each node in their order from 0 to 10. The user can with this information then see that the current node has been emptied. At last the user will be shown the final calculated path and the distance it took to reach it. Each node that is emptied fills the truck 1/4 of it's full capacity, meaning that the calculated path will only be taking the 4 closest trash nodes before returning home to the base node, where the truck returns home after node 8 due to the truck running out of capacity. The truck will then calculate the route to the last possible nodes and thereby finish its purpose of collecting the trash. One should note that the starting node is represented as the base of the truck and is thereforee not supposed to have a trash compactness parameter. 
 
 
 ### Thanks 
