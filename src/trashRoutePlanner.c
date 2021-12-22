@@ -174,7 +174,7 @@ int findClosestTrash(int map[NUMBEROFNODES][NUMBEROFNODES], int trashCompactness
 
         printf("Going to TRASH NODE: %d\n", trashNode);
 
-        printf("Current trash compactness: \n");
+        printf("Current node compactness: \n");
 
         printArray(trashCompactness);
 
