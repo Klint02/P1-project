@@ -38,11 +38,11 @@ int *planFinalRoute(int finalRoute[ROUTELENGTH], int *finalDistance, int *finalR
 {
     int map[NUMBEROFNODES][NUMBEROFNODES] = {0};
     int parentsMap[NUMBEROFNODES][NUMBEROFNODES] = {0};
-    int trashCompactness[NUMBEROFNODES] = {0,0,0,80,90,0,0,0,0};
+    int trashCompactness[NUMBEROFNODES] = {0,0,0,0,0,0,0,0,0};
 
     int truckFullness = 0;
 
-    //compactnessRandomizer(trashCompactness);
+    compactnessRandomizer(trashCompactness);
     printArray(trashCompactness);
 
     /*Allocates the biggest case use of memory for route array*/
